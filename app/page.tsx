@@ -1,23 +1,18 @@
-"use client";
+import Canvas from "@/components/app/Home";
+import Navbar from "@/components/app/Navbar";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
-import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
+export default async function Home() {
+  const session = await getServerSession(authOptions);
 
-export default function Home() {
-  const handleLogout = async () => {
-    signOut({ callbackUrl: "/sign-in" });
-  };
+  console.log(session?.user);
   return (
     <div className="text-center">
-      Welcome to Cal Planner
-      <Button
-        onClick={() => handleLogout()}
-        variant="destructive"
-        className="max-w-xs"
-      >
-        Logout
-      </Button>
+      <div className="mb-4 shadow-lg shadow-gray-800">
+        <Navbar user={session?.user} />
+      </div>
+      <Canvas />
     </div>
   );
 }

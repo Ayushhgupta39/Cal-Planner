@@ -11,6 +11,18 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
+      console.log(
+        "USER: ",
+        user,
+        "ACCOUNT: ",
+        account,
+        "PROFILE; ",
+        profile,
+        "EMAIL: ",
+        email,
+        "CREDENTIALS: ",
+        credentials
+      );
       try {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email! },
